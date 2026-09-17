@@ -1,0 +1,33 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  build-and-release:
+    runs-on: windows-latest
+    env:
+      # Suppress Node 20 deprecation warnings for any actions that haven't updated yet.
+      # The workflow will run on Node 24 by default as per GitHub's recent changes.
+      ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v7
+
+      - name: Setup Rust Toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: stable
+          targets: x86_64-pc-windows-msvc
+
+      - name: Build masqr
+        run: cargo build --release --target x86_64-pc-windows-msvc
+
+      - name: Upload Release Asset
+        uses: softprops/action-gh-release@v3
+        with:
+          files: target/x86_64-pc-windows-msvc/release/masqr.exe
+          fail_on_unmatched_files: true
+          generate_release_notes: true

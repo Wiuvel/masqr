@@ -1,0 +1,10 @@
+{
+    "rust-analyzer.cargo.target": "x86_64-pc-windows-msvc",
+    "rust-analyzer.check.overrideCommand": [
+        "cargo",
+        "check",
+        "--workspace",
+        "--message-format=json",
+        "--target=x86_64-pc-windows-msvc"
+    ]
+}
