@@ -8,6 +8,8 @@ on:
 jobs:
   build-and-release:
     runs-on: windows-latest
+    permissions:
+      contents: write
     env:
       # Suppress Node 20 deprecation warnings for any actions that haven't updated yet.
       # The workflow will run on Node 24 by default as per GitHub's recent changes.
